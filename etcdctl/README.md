@@ -285,6 +285,8 @@ RPC: Txn
 <LEASE> ::= "\""[0-9]+\""
 ```
 
+Unlike other etcdctl commands, any multi-line values in a TXN command must use `\n` to indicate the newline. Literal newlines will cause parsing errors.
+
 #### Output
 
 `SUCCESS` if etcd processed the transaction success list, `FAILURE` if etcd processed the transaction failure list. Prints the output for each command in the executed request list, each separated by a blank line.
@@ -302,7 +304,7 @@ put key1 "overwrote-key1"
 
 # failure requests (get, put, delete):
 put key1 "created-key1"
-put key2 "some extra key"
+put key2 "some extra key\nwith a multi-line value"
 
 # FAILURE
 
@@ -318,7 +320,7 @@ txn in non-interactive mode:
 put key1 "overwrote-key1"
 
 put key1 "created-key1"
-put key2 "some extra key"
+put key2 "some extra key\nwith a multi-line value"
 
 '
 
